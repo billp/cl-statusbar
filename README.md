@@ -6,15 +6,15 @@ A custom status line for [Claude Code](https://docs.anthropic.com/en/docs/claude
 
 **Pro plan:**
 
-<img src="screenshots/pro.png" width="1026">
+<img src="screenshots/pro.png" width="730">
 
 **Max plan (per-model 7d limits):**
 
-<img src="screenshots/max.png" width="1471">
+<img src="screenshots/max.png" width="1026">
 
 **API usage (no Pro/Max plan):**
 
-<img src="screenshots/api.png" width="400">
+<img src="screenshots/api.png" width="280">
 
 ## Features
 
