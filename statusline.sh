@@ -158,6 +158,7 @@ build_usage_line() {
 
   five_int=${five_pct%.*}
   seven_int=${seven_pct%.*}
+  seven_int=${seven_int:-0}
 
   # Parse Max-specific per-model fields
   local opus_pct opus_resets sonnet_pct sonnet_resets
