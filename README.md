@@ -1,30 +1,24 @@
 # cl-statusbar
 
-A custom status line for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that shows model info, context usage, session duration, and Pro/Max plan rate limits — all in your terminal.
+A custom status line for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that shows model info, folder name, git branch, context usage, session duration, and Pro/Max plan rate limits — all in your terminal.
 
 ## Example output
 
 **Pro plan:**
-```
-ctx ━━━━━━╌╌╌╌╌╌ 48%  ·  ⏱ 12m 34s  ·  5h ━━━━━━━━╌╌╌╌ 65% ↻ 18:00 (2h 40m)  ·  7d ━━━╌╌╌╌╌╌╌╌╌ 28% ↻ Feb 18 (3d 5h)
-◆ Claude Opus 4.6  ▸ my-project  ⎇ main  ·  Pro
-```
+
+<img src="screenshots/pro.png" width="1026">
 
 **Max plan (per-model 7d limits):**
-```
-ctx ━━━━━━━━━╌╌╌ 72%  ·  ⏱ 45m 10s  ·  5h ━━━━╌╌╌╌╌╌╌╌ 30% ↻ 14:20 (1h 15m)  ·  opus ━━━━━━╌╌╌╌╌╌ 50% ↻ Feb 15 (2d 8h)  ·  sonnet ━━╌╌╌╌╌╌╌╌╌╌ 18% ↻ Feb 16 (3d 1h)
-◆ Claude Opus 4.6  ▸ cl-statusbar  ⎇ feature/docs  ·  Max
-```
+
+<img src="screenshots/max.png" width="1471">
 
 **API usage (no Pro/Max plan):**
-```
-ctx ━━╌╌╌╌╌╌╌╌╌╌ 15%  ·  ⏱ 3m 22s  ·  $0.0842
-◆ Claude Sonnet 4.5  ▸ my-app  ⎇ main  ·  API
-```
+
+<img src="screenshots/api.png" width="400">
 
 ## Features
 
-- **Model & project info** — current model, project name, and git branch
+- **Model & project info** — current model, folder name, and git branch
 - **Context window** — color-coded progress bar (green → yellow → red)
 - **Session duration** — total time for the current session
 - **Pro plan limits** — 5-hour and 7-day usage bars with reset countdown
@@ -43,14 +37,14 @@ ctx ━━╌╌╌╌╌╌╌╌╌╌ 15%  ·  ⏱ 3m 22s  ·  $0.0842
 
 **Remote (one-liner):**
 ```sh
-curl -fsSL https://raw.githubusercontent.com/billp/cl-statusbar/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/billp/cl-statusbar/main/scripts/install.sh | bash
 ```
 
 **Local:**
 ```sh
 git clone https://github.com/billp/cl-statusbar.git
 cd cl-statusbar
-bash install.sh
+bash scripts/install.sh
 ```
 
 Copies `statusline.sh` to `~/.claude/` and configures `settings.json` automatically.
@@ -59,12 +53,12 @@ Copies `statusline.sh` to `~/.claude/` and configures `settings.json` automatica
 
 **Remote:**
 ```sh
-curl -fsSL https://raw.githubusercontent.com/billp/cl-statusbar/main/uninstall.sh | bash
+curl -fsSL https://raw.githubusercontent.com/billp/cl-statusbar/main/scripts/uninstall.sh | bash
 ```
 
 **Local:**
 ```sh
-bash uninstall.sh
+bash scripts/uninstall.sh
 ```
 
 Removes `~/.claude/statusline.sh`, cleans the `statusLine` key from `settings.json` (preserving all other settings), and deletes the usage cache.

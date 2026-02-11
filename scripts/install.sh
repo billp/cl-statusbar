@@ -17,7 +17,8 @@ fi
 # ── 2. Resolve source ────────────────────────────────────────────────
 REPO_URL="https://raw.githubusercontent.com/billp/cl-statusbar/main"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)" || true
-SOURCE_FILE="${SCRIPT_DIR:+$SCRIPT_DIR/statusline.sh}"
+REPO_DIR="${SCRIPT_DIR:+$(dirname "$SCRIPT_DIR")}"
+SOURCE_FILE="${REPO_DIR:+$REPO_DIR/statusline.sh}"
 
 # ── 3. Create ~/.claude/ if needed ───────────────────────────────────
 CLAUDE_DIR="$HOME/.claude"
