@@ -41,16 +41,28 @@ ctx ━━╌╌╌╌╌╌╌╌╌╌ 15%  ·  ⏱ 3m 22s  ·  $0.0842
 
 ## Install
 
+**Remote (one-liner):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/billp/cl-statusbar/main/install.sh | bash
+```
+
+**Local:**
 ```sh
 git clone https://github.com/billp/cl-statusbar.git
 cd cl-statusbar
 bash install.sh
 ```
 
-This copies `statusline.sh` to `~/.claude/` and configures `settings.json` automatically.
+Copies `statusline.sh` to `~/.claude/` and configures `settings.json` automatically.
 
 ## Uninstall
 
+**Remote:**
+```sh
+curl -fsSL https://raw.githubusercontent.com/billp/cl-statusbar/main/uninstall.sh | bash
+```
+
+**Local:**
 ```sh
 bash uninstall.sh
 ```
