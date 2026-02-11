@@ -228,20 +228,37 @@ build_usage_line() {
 
 USAGE_LINE=$(build_usage_line 2>/dev/null) || true
 
-# ── 10. Build API cost info (when not on Pro/Max) ────────────────────
+# ── 10. Detect plan mode ─────────────────────────────────────────────
+PLAN_MODE=""
+if [[ -n "$USAGE_LINE" && -f "$CACHE_FILE" ]]; then
+  if jq -e '.seven_day_opus // .seven_day_sonnet' "$CACHE_FILE" &>/dev/null; then
+    PLAN_MODE="Max"
+  else
+    PLAN_MODE="Pro"
+  fi
+elif [[ -n "$COST_USD" ]]; then
+  PLAN_MODE="API"
+fi
+
+# ── 11. Build API cost info (when not on Pro/Max) ────────────────────
 API_PART=""
 if [[ -z "$USAGE_LINE" && -n "$COST_USD" ]]; then
   COST_FMT=$(printf '$%.4f' "$COST_USD")
   API_PART="${WHITE}${COST_FMT}${RST}"
 fi
 
-# ── 11. Output ───────────────────────────────────────────────────────
+# ── 12. Output ───────────────────────────────────────────────────────
 LINE2="${CTX_PART} ${SEP} ${DUR_PART}"
 if [[ -n "$USAGE_LINE" ]]; then
   LINE2+=" ${SEP} ${USAGE_LINE}"
 elif [[ -n "$API_PART" ]]; then
   LINE2+=" ${SEP} ${API_PART}"
 fi
+
+if [[ -n "$PLAN_MODE" ]]; then
+  LINE1+="${SEP}${WHITE}${PLAN_MODE}${RST}"
+fi
+
 echo -ne "$LINE2"
 echo ""
 echo -ne "$LINE1"

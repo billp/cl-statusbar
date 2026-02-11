@@ -7,19 +7,19 @@ A custom status line for [Claude Code](https://docs.anthropic.com/en/docs/claude
 **Pro plan:**
 ```
 ctx ━━━━━━╌╌╌╌╌╌ 48%  ·  ⏱ 12m 34s  ·  5h ━━━━━━━━╌╌╌╌ 65% ↻ 18:00 (2h 40m)  ·  7d ━━━╌╌╌╌╌╌╌╌╌ 28% ↻ Feb 18 (3d 5h)
-◆ Claude Opus 4.6  ▸ my-project  ⎇ main
+◆ Claude Opus 4.6  ▸ my-project  ⎇ main  ·  Pro
 ```
 
 **Max plan (per-model 7d limits):**
 ```
 ctx ━━━━━━━━━╌╌╌ 72%  ·  ⏱ 45m 10s  ·  5h ━━━━╌╌╌╌╌╌╌╌ 30% ↻ 14:20 (1h 15m)  ·  opus ━━━━━━╌╌╌╌╌╌ 50% ↻ Feb 15 (2d 8h)  ·  sonnet ━━╌╌╌╌╌╌╌╌╌╌ 18% ↻ Feb 16 (3d 1h)
-◆ Claude Opus 4.6  ▸ cl-statusbar  ⎇ feature/docs
+◆ Claude Opus 4.6  ▸ cl-statusbar  ⎇ feature/docs  ·  Max
 ```
 
 **API usage (no Pro/Max plan):**
 ```
 ctx ━━╌╌╌╌╌╌╌╌╌╌ 15%  ·  ⏱ 3m 22s  ·  $0.0842
-◆ Claude Sonnet 4.5  ▸ my-app  ⎇ main
+◆ Claude Sonnet 4.5  ▸ my-app  ⎇ main  ·  API
 ```
 
 ## Features
@@ -42,7 +42,7 @@ ctx ━━╌╌╌╌╌╌╌╌╌╌ 15%  ·  ⏱ 3m 22s  ·  $0.0842
 ## Install
 
 ```sh
-git clone https://github.com/vpanagiotopoulos/cl-statusbar.git
+git clone https://github.com/billp/cl-statusbar.git
 cd cl-statusbar
 bash install.sh
 ```
