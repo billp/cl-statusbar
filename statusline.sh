@@ -182,8 +182,19 @@ build_usage_line() {
 
   # Detect Max plan: opus or sonnet per-model data present
   if [[ -n "$opus_pct" || -n "$sonnet_pct" ]]; then
-    # ── Max plan: per-model 7d bars ──
+    # ── Max plan: 7d aggregate + per-model bars ──
     local result="${L2_5H}"
+
+    if [[ -n "$seven_pct" ]]; then
+      local seven_color=$(color_for_pct "$seven_int")
+      local seven_reset_info=""
+      [[ -n "$seven_resets_at" ]] && seven_reset_info=$(fmt_reset_info "$seven_resets_at" "%b %d")
+      local L2_7D="${LABEL}7d${RST}  ${seven_color}$(progress_bar "$seven_int" 12)${RST} ${WHITE}${seven_int}%${RST}"
+      if [[ -n "$seven_reset_info" ]]; then
+        L2_7D+="  ${LABEL}↻${RST} ${WHITE}${seven_reset_info}${RST}"
+      fi
+      result+=" ${SEP} ${L2_7D}"
+    fi
 
     if [[ -n "$opus_pct" ]]; then
       local opus_int=${opus_pct%.*}
