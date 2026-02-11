@@ -8,11 +8,11 @@ A custom status line for [Claude Code](https://docs.anthropic.com/en/docs/claude
 
 <img src="screenshots/pro.png" width="730">
 
-**Max plan (per-model 7d limits):**
+**Max plan:**
 
 <img src="screenshots/max.png" width="1026">
 
-**API usage (no Pro/Max plan):**
+**API usage:**
 
 <img src="screenshots/api.png" width="280">
 
