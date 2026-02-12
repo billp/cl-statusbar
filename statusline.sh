@@ -160,6 +160,13 @@ build_usage_line() {
   seven_int=${seven_pct%.*}
   seven_int=${seven_int:-0}
 
+  # Parse extra usage fields
+  local extra_enabled extra_limit extra_used extra_util
+  extra_enabled=$(echo "$usage_json" | jq -r '.extra_usage.is_enabled // empty')
+  extra_limit=$(echo "$usage_json" | jq -r '.extra_usage.monthly_limit // empty')
+  extra_used=$(echo "$usage_json" | jq -r '.extra_usage.used_credits // empty')
+  extra_util=$(echo "$usage_json" | jq -r '.extra_usage.utilization // empty')
+
   # Parse Max-specific per-model fields
   local opus_pct opus_resets sonnet_pct sonnet_resets
   opus_pct=$(echo "$usage_json" | jq -r '.seven_day_opus.utilization // empty')
@@ -178,6 +185,19 @@ build_usage_line() {
   local L2_5H="${LABEL}5h${RST}  ${five_color}$(progress_bar "$five_int" 12)${RST} ${WHITE}${five_int}%${RST}"
   if [[ -n "$five_reset_info" ]]; then
     L2_5H+="  ${LABEL}↻${RST} ${WHITE}${five_reset_info}${RST}"
+  fi
+
+  # Extra usage info (shown when enabled)
+  local L2_EXTRA=""
+  if [[ "$extra_enabled" == "true" && -n "$extra_used" && -n "$extra_limit" ]]; then
+    local extra_int=${extra_util%.*}
+    extra_int=${extra_int:-0}
+    local extra_color=$(color_for_pct "$extra_int")
+    local used_dollars remaining_dollars limit_dollars
+    used_dollars=$(printf '%.2f' "$(echo "$extra_used / 100" | bc -l)")
+    limit_dollars=$(printf '%.2f' "$(echo "$extra_limit / 100" | bc -l)")
+    remaining_dollars=$(printf '%.2f' "$(echo "($extra_limit - $extra_used) / 100" | bc -l)")
+    L2_EXTRA="${LABEL}extra${RST}  ${extra_color}$(progress_bar "$extra_int" 12)${RST} ${WHITE}\$${used_dollars}/\$${limit_dollars}${RST}"
   fi
 
   # Detect Max plan: opus or sonnet per-model data present
@@ -220,6 +240,7 @@ build_usage_line() {
       result+=" ${SEP} ${L2_SONNET}"
     fi
 
+    [[ -n "$L2_EXTRA" ]] && result+=" ${SEP} ${L2_EXTRA}"
     echo -ne "$result"
   else
     # ── Pro plan: single 7d bar ──
@@ -234,7 +255,9 @@ build_usage_line() {
       L2_7D+="  ${LABEL}↻${RST} ${WHITE}${seven_reset_info}${RST}"
     fi
 
-    echo -ne "${L2_5H} ${SEP} ${L2_7D}"
+    local pro_result="${L2_5H} ${SEP} ${L2_7D}"
+    [[ -n "$L2_EXTRA" ]] && pro_result+=" ${SEP} ${L2_EXTRA}"
+    echo -ne "$pro_result"
   fi
 }
 
