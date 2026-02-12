@@ -23,6 +23,7 @@ A custom status line for [Claude Code](https://docs.anthropic.com/en/docs/claude
 - **Session duration** — total time for the current session
 - **Pro plan limits** — 5-hour and 7-day usage bars with reset countdown
 - **Max plan limits** — 5-hour bar plus per-model (Opus/Sonnet) 7-day bars
+- **Extra usage** — spend/limit bar when extra usage is enabled (e.g. `$3.74/$50.00`)
 - **API cost** — total USD cost when not on a Pro/Max plan
 - **Usage caching** — API responses cached for 2 minutes to stay fast
 
