@@ -19,7 +19,7 @@ A custom status line for [Claude Code](https://docs.anthropic.com/en/docs/claude
 ## Features
 
 - **Model & project info** — current model, folder name, and git branch
-- **Context window** — color-coded progress bar (green → yellow → red)
+- **Context window** — color-coded progress bar (green → yellow → red) with window size (e.g. `200k`, `1m`)
 - **Session duration** — total time for the current session
 - **Pro plan limits** — 5-hour and 7-day usage bars with reset countdown
 - **Max plan limits** — 5-hour bar plus per-model (Opus/Sonnet) 7-day bars

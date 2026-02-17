@@ -6,6 +6,7 @@ set -euo pipefail
 INPUT="$(cat)"
 MODEL=$(echo "$INPUT" | jq -r '.model.display_name // empty')
 CTX_PCT=$(echo "$INPUT" | jq -r '.context_window.used_percentage // 0')
+CTX_WIN=$(echo "$INPUT" | jq -r '.context_window.context_window_size // empty')
 DURATION_MS=$(echo "$INPUT" | jq -r '.cost.total_duration_ms // 0')
 CWD=$(echo "$INPUT" | jq -r '.cwd // "."')
 COST_USD=$(echo "$INPUT" | jq -r '.cost.total_cost_usd // empty')
@@ -101,7 +102,15 @@ fi
 # Context bar + session duration (for line 2)
 CTX_INT=${CTX_PCT%.*}
 CTX_COLOR=$(color_for_pct "$CTX_INT")
-CTX_PART="${LABEL}ctx${RST} ${CTX_COLOR}$(progress_bar "$CTX_INT" 12)${RST} ${WHITE}${CTX_INT}%${RST}"
+CTX_WIN_FMT=""
+if [[ -n "$CTX_WIN" ]]; then
+  if (( CTX_WIN >= 1000000 )); then
+    CTX_WIN_FMT=" ($(( CTX_WIN / 1000000 ))m)"
+  elif (( CTX_WIN >= 1000 )); then
+    CTX_WIN_FMT=" ($(( CTX_WIN / 1000 ))k)"
+  fi
+fi
+CTX_PART="${LABEL}ctx${RST} ${CTX_COLOR}$(progress_bar "$CTX_INT" 12)${RST} ${WHITE}${CTX_INT}%${GRAY}${CTX_WIN_FMT}${RST}"
 DUR_PART="${LABEL}⏱${RST} ${WHITE}${DURATION_FMT}${RST}"
 
 LINE1="${L1C1}"
