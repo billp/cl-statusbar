@@ -121,7 +121,13 @@ CACHE_TTL=120
 
 fetch_usage() {
   local cred_json
-  cred_json=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || return 1
+  if [[ "$(uname)" == "Darwin" ]]; then
+    cred_json=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null) || return 1
+  else
+    local cred_file="${HOME}/.claude/.credentials.json"
+    [[ -f "$cred_file" ]] || return 1
+    cred_json=$(cat "$cred_file")
+  fi
   local token
   token=$(echo "$cred_json" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null) || return 1
   [[ -z "$token" ]] && return 1
@@ -130,7 +136,11 @@ fetch_usage() {
   now=$(date +%s)
   if [[ -f "$CACHE_FILE" ]]; then
     local mtime
-    mtime=$(stat -f %m "$CACHE_FILE" 2>/dev/null || echo 0)
+    if [[ "$(uname)" == "Darwin" ]]; then
+      mtime=$(stat -f %m "$CACHE_FILE" 2>/dev/null || echo 0)
+    else
+      mtime=$(stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)
+    fi
     if (( now - mtime < CACHE_TTL )); then
       cat "$CACHE_FILE"
       return 0
