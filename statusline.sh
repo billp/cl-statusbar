@@ -208,7 +208,7 @@ build_usage_line() {
 
   # Extra usage info (shown when enabled)
   local L2_EXTRA=""
-  if [[ "$extra_enabled" == "true" && "$five_int" -ge 100 && -n "$extra_used" && -n "$extra_limit" ]]; then
+  if [[ "$extra_enabled" == "true" && -n "$extra_used" && -n "$extra_limit" ]]; then
     local extra_int=${extra_util%.*}
     extra_int=${extra_int:-0}
     local extra_color=$(color_for_pct "$extra_int")
